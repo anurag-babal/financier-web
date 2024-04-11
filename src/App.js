@@ -1,12 +1,17 @@
-import Header from "./components/Header";
-import AddTransaction from "./components/AddTransaction";
+import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from './pages/Login';
 
 function App() {
   return (
-    <>
-      <Header />
-      <AddTransaction />
-    </>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
