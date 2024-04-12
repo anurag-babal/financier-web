@@ -8,7 +8,7 @@ function Login() {
   <>
     <div className="login-container">
         <div className='logoPart'>
-            <img src={logo} className='logo' alt="Description of the image" />
+            <img src={logo} className='logo' alt="Logo*" />
         </div>
         <div className="form-container">
             <form className="form-group">
@@ -39,9 +39,11 @@ function Login() {
                 {/* {showError && (
                 <div style={{ color: "red", margin: "10px 0" }}>{errorData}</div>
                 )} */}
-                <button type="submit" className="login-submit-btn">
-                    Login
-                </button>
+                <Link to="/homepage">
+                    <button type="submit" className="login-submit-btn">
+                        Login
+                    </button>
+                </Link>
                 <div>
                     <div className="or-Container">
                     <hr className="horizontal-line" />
