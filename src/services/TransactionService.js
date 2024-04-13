@@ -23,7 +23,7 @@ export async function addTransaction(transaction) {
             transaction.id = transactions.length + 1;
         }
         transactions.push(transaction);
-        return "Transaction added successfully";
+        return "Expense added successfully";
     } catch (error) {
         throw error;
     }
@@ -35,5 +35,5 @@ export async function deleteTransaction(id) {
     if (index > -1) {
         transactions.splice(index, 1);
     }
-    return "Transaction deleted successfully";
+    return "Expense deleted successfully";
 }
