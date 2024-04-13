@@ -1,14 +1,10 @@
 import {useState} from "react";
 import {addTransaction} from "../services/TransactionService";
 import {Alert} from "./Alert";
+import {Transaction} from "../model/Transaction";
 
-export default function AddTransaction() {
-    const [transaction, setTransaction] = useState({
-        category: '',
-        amount: 0,
-        description: '',
-        date: ''
-    });
+export default function AddExpense() {
+    const [transaction, setTransaction] = useState(new Transaction(undefined,'', 0, '', ''));
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
