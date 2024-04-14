@@ -4,10 +4,11 @@ import {Transaction} from "../model/Transaction";
 import {Alert} from "./Alert";
 
 function initTransaction() {
+    // trans.date = new Date().toISOString().split('T')[0];
     return new Transaction();
 }
 
-function ExpenseForm() {
+function ExpenseForm({onClose}) {
     const [transaction, setTransaction] = useState(initTransaction());
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
@@ -43,8 +44,10 @@ function ExpenseForm() {
             addTransaction(transaction)
                 .then(r => setData(r))
                 .catch(e => setErrors(e))
-                .finally(() => setLoading(false));
-            setTransaction(initTransaction());
+                .finally(() => {
+                    setLoading(false);
+                    onClose();
+                });
         }
     }
 
@@ -58,7 +61,7 @@ function ExpenseForm() {
                     required={true}
                     onChange={(event) => handleChange('category', event.target.value)}
                 />
-                {errors.category && <p className="error">{errors.category}</p>}
+                {errors.category && <Alert message={errors.category} type='danger'/>}
             </div>
             <div className="form-group">
                 <label>Enter transaction amount:</label>
@@ -68,7 +71,7 @@ function ExpenseForm() {
                     required={true}
                     onChange={(event) => handleChange('amount', event.target.value)}
                 />
-                {errors.amount && <p className="error">{errors.amount}</p>}
+                {errors.amount && <Alert message={errors.amount} type='danger'/>}
             </div>
             <div className="form-group">
                 <label>Enter description:</label>

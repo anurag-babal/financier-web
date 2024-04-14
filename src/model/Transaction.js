@@ -6,7 +6,7 @@ export class Transaction {
         category = '',
         amount = 0,
         description = '',
-        date = formatDateToIndian(new Date())
+        date = new Date().toISOString().split('T')[0]
     ) {
         this.id = undefined;
         this.category = category;

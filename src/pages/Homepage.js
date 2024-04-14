@@ -5,6 +5,7 @@ import Overview from '../components/Overview';
 import Expenses from '../components/Expenses';
 import ExpenseForm from "../components/ExpenseForm";
 import Popup from "../components/Popup";
+import {deleteTransaction} from "../services/TransactionService";
 
 function Homepage() {
     const data = [
@@ -36,9 +37,12 @@ function Homepage() {
                 <div className='add-btn'>
                     <button className='add-exp-btn' onClick={handleOpenPopup}>+ Add Expense</button>
                 </div>
-                {isPopupOpen && <Popup onClose={handleClosePopup} component={<ExpenseForm/>}/>}
+                {
+                    isPopupOpen &&
+                    <Popup title="Add Expense" onClose={handleClosePopup} component={<ExpenseForm onClose={handleClosePopup}/>}/>
+                }
                 <div className='recent-transactions'>
-                    <Expenses></Expenses>
+                    <Expenses />
                 </div>
             </div>
         </>
