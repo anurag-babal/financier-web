@@ -1,18 +1,21 @@
-import {useState} from "react";
+import {useEffect, useId, useState} from "react";
 import {addTransaction} from "../services/TransactionService";
 import {Transaction} from "../model/Transaction";
 import {Alert} from "./Alert";
+import {getCategories} from "../services/CategoryService";
 
 function initTransaction() {
     // trans.date = new Date().toISOString().split('T')[0];
     return new Transaction();
 }
 
-function ExpenseForm({onClose}) {
-    const [transaction, setTransaction] = useState(initTransaction());
+function ExpenseForm({onClose, trans = initTransaction()}) {
+    const [transaction, setTransaction] = useState(trans);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [errors, setErrors] = useState({});
+    const [categories, setCategories] = useState([]);
+    const categoryDropDownId = useId();
 
     function handleChange(inputIdentifier, newValue) {
         setTransaction(prev => {
@@ -22,6 +25,12 @@ function ExpenseForm({onClose}) {
             };
         });
     }
+
+    useEffect(() => {
+        getCategories()
+            .then(r => setCategories(r))
+            .catch(e => setErrors(e));
+    }, []);
 
     function validateForm() {
         const newErrors = {};
@@ -53,44 +62,52 @@ function ExpenseForm({onClose}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label>Enter transaction category:</label>
-                <input
-                    type='text'
-                    value={transaction.category}
-                    required={true}
-                    onChange={(event) => handleChange('category', event.target.value)}
-                />
+            <div className="form-group row align-items-center me-1 my-2">
+                <label className={'col-4'} htmlFor={categoryDropDownId}>Category:</label>
+                <select id={categoryDropDownId}
+                        className={'col'}
+                        value={transaction.category}
+                        onChange={(event) => handleChange('category', event.target.value)}
+                >
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.name}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
                 {errors.category && <Alert message={errors.category} type='danger'/>}
             </div>
-            <div className="form-group">
-                <label>Enter transaction amount:</label>
+            <div className="form-group row align-items-center me-1 my-2">
+                <label className={'col-4'}>Amount:</label>
                 <input
                     type='number'
+                    className={'col'}
                     value={transaction.amount}
                     required={true}
                     onChange={(event) => handleChange('amount', event.target.value)}
                 />
                 {errors.amount && <Alert message={errors.amount} type='danger'/>}
             </div>
-            <div className="form-group">
-                <label>Enter description:</label>
+            <div className="form-group row align-items-center me-1 my-2">
+                <label className={'col-4'}>Description:</label>
                 <input
                     type='text'
+                    className={'col'}
                     value={transaction.description}
                     onChange={(event) => handleChange('description', event.target.value)}
                 />
             </div>
-            <div className="form-group">
-                <label>Enter transaction date:</label>
+            <div className="form-group row align-items-center me-1 my-2">
+                <label className={'col-4'}>Date:</label>
                 <input
                     type='date'
+                    className={'col'}
                     value={transaction.date}
                     required={true}
                     onChange={(event) => handleChange('date', event.target.value)}
                 />
             </div>
-            <button type={"submit"} className="btn btn-primary" disabled={loading}>
+            <button type={"submit"} className="btn btn-primary my-2" disabled={loading}>
                 {
                     loading
                         ? (<span className="spinner-border spinner-border-sm"></span>)

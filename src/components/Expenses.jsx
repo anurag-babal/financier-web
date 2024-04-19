@@ -19,6 +19,7 @@ export default function Expenses() {
     }, [isUpdated]);
 
     const handleEdit = (id) => {
+
     };
     const handleDelete = (id) => {
         deleteTransaction(id)
@@ -36,9 +37,9 @@ export default function Expenses() {
                     <tr>
                         <th>Id</th>
                         <th>Date</th>
-                        <th>Transaction</th>
-                        <th>Amount</th>
                         <th>Category</th>
+                        <th>Amount</th>
+                        <th>Details</th>
                         <th>Action</th>
                     </tr>
                     </thead>

@@ -39,7 +39,11 @@ function Homepage() {
                 </div>
                 {
                     isPopupOpen &&
-                    <Popup title="Add Expense" onClose={handleClosePopup} component={<ExpenseForm onClose={handleClosePopup}/>}/>
+                    <Popup
+                        title="Add Expense"
+                        onClose={handleClosePopup}
+                        component={<ExpenseForm onClose={handleClosePopup}/>}
+                    />
                 }
                 <div className='recent-transactions'>
                     <Expenses />
